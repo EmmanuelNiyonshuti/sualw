@@ -7,7 +7,9 @@ authors = [
     { name = "EmmanuelNiyonshuti", email = "nemmy0257@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "typer>=0.24.1",
+]
 
 [project.scripts]
 sualw = "sualw:main"
@@ -15,3 +17,10 @@ sualw = "sualw:main"
 [build-system]
 requires = ["uv_build>=0.9.26,<0.10.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.20.0",
+    "pytest>=9.0.2",
+    "ruff>=0.15.8",
+]
