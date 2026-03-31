@@ -1,0 +1,17 @@
+[project]
+name = "sualw"
+version = "0.1.0"
+description = "A small cli tool to silence process logs and get them back on demand."
+readme = "README.md"
+authors = [
+    { name = "EmmanuelNiyonshuti", email = "nemmy0257@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
+[project.scripts]
+sualw = "sualw:main"
+
+[build-system]
+requires = ["uv_build>=0.9.26,<0.10.0"]
+build-backend = "uv_build"
