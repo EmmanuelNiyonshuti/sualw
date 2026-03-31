@@ -1,7 +1,7 @@
 import sys
 
 import typer
-from rich import Console
+from rich.console import Console
 
 app = typer.Typer(
     name="sualw",
@@ -29,11 +29,11 @@ _SUBCOMMANDS = frozenset(
 )
 
 
-def _process_cmd(child_cmd: list[str], proc_name: str | None) -> None:
+def _process_cmd() -> None:
     pass
 
 
-def main() -> None:
+def main() -> None | tuple[list[str], str | None]:
     """
     Reads sys.argv before Typer sees it to decide which path to take:
       - Known subcommand -> hand full `argv` to Typer.
@@ -44,7 +44,7 @@ def main() -> None:
 
     if not args:
         app()
-        return
+        return None
 
     # Find the first argument token that isn't a flag (doesn't start with -).
     # tells us whether the user is running a subcommand
@@ -59,7 +59,7 @@ def main() -> None:
         # It's a known subcommand, or just flags like --help.
         # Let Typer parse and dispatch it normally.
         app()
-        return
+        return None
     # Parse --name/-n out of the args manually. We can't use Typer for this
     # because Typer would also try to parse the child command's flags.
     #
@@ -85,4 +85,4 @@ def main() -> None:
         err_console.print("[red]X[/red]  No command provided.")
         sys.exit(1)
 
-    _process_cmd(child_cmd, proc_name)
+    return child_cmd, proc_name
