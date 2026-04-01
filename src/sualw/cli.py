@@ -29,8 +29,42 @@ _SUBCOMMANDS = frozenset(
 )
 
 
-def _process_cmd() -> None:
+def process_cmd() -> None:
     pass
+
+
+def parse_argv(args: list[str]) -> None | tuple[list[str], str | None]:
+    """
+    Parses the command and process name from the given args.
+    Returns a tuple of (child_cmd, proc_name) if a command is found, or None if no command is provided.
+    """
+    if not args:
+        return None
+
+    proc_name: str | None = None
+    i = 0
+
+    while i < len(args):
+        arg = args[i]
+        if arg in ("--name", "-n"):
+            if i + 1 >= len(args):
+                raise ValueError(f"Flag '{arg}' provided without a value.")
+            proc_name = args[i + 1]
+            i += 2
+        elif arg.startswith("-"):
+            i += 1
+        else:
+            break
+
+    child_cmd = args[i:]
+
+    if not child_cmd or child_cmd[0] in _SUBCOMMANDS:
+        return None
+
+    if not child_cmd:
+        raise ValueError("No command provided to run.")
+
+    return child_cmd, proc_name
 
 
 def main() -> None | tuple[list[str], str | None]:
@@ -41,48 +75,14 @@ def main() -> None | tuple[list[str], str | None]:
         --name/-n ourselves, pass everything else to _start_shelveited() verbatim.
     """
     args = sys.argv[1:]
-
-    if not args:
-        app()
-        return None
-
-    # Find the first argument token that isn't a flag (doesn't start with -).
-    # tells us whether the user is running a subcommand
-    # or wants to background something.
-    first_non_flag: str | None = None
-    for arg in args:
-        if not arg.startswith("-"):
-            first_non_flag = arg
-            break
-
-    if first_non_flag is None or first_non_flag in _SUBCOMMANDS:
-        # It's a known subcommand, or just flags like --help.
-        # Let Typer parse and dispatch it normally.
-        app()
-        return None
-    # Parse --name/-n out of the args manually. We can't use Typer for this
-    # because Typer would also try to parse the child command's flags.
-    #
-    # Everything remaining after we remove --name and its value is the
-    # command to pass to subprocess — untouched, in the original order.
-
-    proc_name: str | None = None
-    child_cmd = list(args)
-
-    for flag in ("--name", "-n"):
-        if flag in child_cmd:
-            flag_index = child_cmd.index(flag)
-            if flag_index + 1 >= len(child_cmd):
-                # User typed `shelveit --name` with nothing after it.
-                err_console.print(f"[red]X[/red]  {flag} requires a value.")
-                sys.exit(1)
-            proc_name = child_cmd[flag_index + 1]
-            # Remove both the flag and its value from the command list.
-            del child_cmd[flag_index : flag_index + 2]
-            break
-
-    if not child_cmd:
-        err_console.print("[red]X[/red]  No command provided.")
+    try:
+        result = parse_argv(args)
+    except ValueError as e:
+        err_console.print(f"[red]X[/red]  {e}")
         sys.exit(1)
+    if result is None:
+        app()
+        return None
 
-    return child_cmd, proc_name
+    child_cmd, proc_name = result
+    process_cmd(child_cmd, proc_name)
