@@ -333,7 +333,7 @@ class Process:
         supervisor_cmd = [
             sys.executable,
             "-m",
-            "sualw._supervisor",
+            "sualw.supervisor",
             name,
             "--",
             *full_cmd,
