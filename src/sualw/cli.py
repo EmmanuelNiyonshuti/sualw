@@ -235,7 +235,7 @@ def process_cmd(child_cmd: list[str], proc_name: str | None = None) -> None:
         return
     except StartupError as exc:
         err_console.print(
-            f"\n[red]✗[/red]  [bold]{proc_name}[/bold] exited immediately "
+            f"\n[red]{Icon.FAIL}[/red]  [bold]{proc_name}[/bold] exited immediately "
             f"[dim](code {exc.exit_code})[/dim]\n"
         )
         if exc.log_tail:
@@ -299,7 +299,7 @@ def main() -> None | tuple[list[str], str | None]:
     try:
         result = parse_argv(args)
     except ValueError as e:
-        err_console.print(f"[red]X[/red]  {e}")
+        err_console.print(f"[red]{Icon.FAIL}[/red]  {e}")
         sys.exit(1)
     if result is None:
         app()
