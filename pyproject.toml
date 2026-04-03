@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-sualw = "sualw:main"
+sualw = "sualw.cli:main"
 
 [build-system]
 requires = ["uv_build>=0.9.26,<0.10.0"]
@@ -23,4 +23,16 @@ dev = [
     "mypy>=1.20.0",
     "pytest>=9.0.2",
     "ruff>=0.15.8",
+    "starlette>=1.0.0",
+    "uvicorn>=0.42.0",
+]
+
+[tool.uv.build-backend]
+module-name = "sualw"
+module-root = "src"
+
+
+[tool.ruff.lint]
+ignore = [
+    "UP007", # don’t rewrite exception tuples into | syntax.
 ]
