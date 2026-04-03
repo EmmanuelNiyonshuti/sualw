@@ -49,18 +49,20 @@ def make_proc(started_at: str) -> Process:
 
 
 def test_seconds():
-    from datetime import UTC, datetime, timedelta
+    from datetime import datetime, timedelta, timezone
 
-    ts = (datetime.now(UTC) - timedelta(seconds=30)).isoformat(timespec="seconds")
+    ts = (datetime.now(timezone.utc) - timedelta(seconds=30)).isoformat(
+        timespec="seconds"
+    )
     proc = make_proc(ts)
     assert proc.uptime.endswith("s")
     assert "30" in proc.uptime or "29" in proc.uptime  # allow 1s timing slack
 
 
 def test_minutes():
-    from datetime import UTC, datetime, timedelta
+    from datetime import datetime, timedelta, timezone
 
-    ts = (datetime.now(UTC) - timedelta(minutes=5, seconds=12)).isoformat(
+    ts = (datetime.now(timezone.utc) - timedelta(minutes=5, seconds=12)).isoformat(
         timespec="seconds"
     )
     proc = make_proc(ts)
@@ -68,9 +70,9 @@ def test_minutes():
 
 
 def test_hours():
-    from datetime import UTC, datetime, timedelta
+    from datetime import datetime, timedelta, timezone
 
-    ts = (datetime.now(UTC) - timedelta(hours=2, minutes=30)).isoformat(
+    ts = (datetime.now(timezone.utc) - timedelta(hours=2, minutes=30)).isoformat(
         timespec="seconds"
     )
     proc = make_proc(ts)
