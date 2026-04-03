@@ -15,7 +15,7 @@ def main() -> None:
         separator_index = args.index("--")
         proc_name = args[0]
         proc_command = args[separator_index + 1 :]
-    except ValueError, IndexError:
+    except (ValueError, IndexError):
         sys.stderr.write("sualw._supervisor: malformed arguments\n")
         sys.exit(127)
 

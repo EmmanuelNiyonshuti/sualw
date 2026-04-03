@@ -72,7 +72,7 @@ def _find_group_members(pgid: int) -> list[int]:
             fields = open(stat_path).read().split()
             if len(fields) >= 5 and int(fields[4]) == pgid:
                 member_pids.append(int(fields[0]))
-        except OSError, ValueError:
+        except (OSError, ValueError):
             pass
     return member_pids
 

@@ -47,7 +47,7 @@ def _init_libc():
         libc.inotify_rm_watch.restype = ctypes.c_int
         libc.inotify_rm_watch.argtypes = [ctypes.c_int, ctypes.c_int]
         return libc
-    except OSError, AttributeError:
+    except (OSError, AttributeError):
         return None
 
 

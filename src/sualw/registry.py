@@ -37,7 +37,7 @@ def _load_json() -> dict:
     try:
         with open(REGISTRY_FILE) as f:
             return json.load(f)
-    except json.JSONDecodeError, OSError:
+    except (json.JSONDecodeError, OSError):
         return {}
 
 
