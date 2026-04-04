@@ -1,4 +1,11 @@
 # sualw
+[![Tests](https://github.com/EmmanuelNiyonshuti/sualw/actions/workflows/main.yml/badge.svg)](https://github.com/EmmanuelNiyonshuti/sualw/actions)
+[![codecov](https://codecov.io/gh/EmmanuelNiyonshuti/sualw/graph/badge.svg?token=6HA3SJLM0F)](https://codecov.io/gh/EmmanuelNiyonshuti/sualw)
+[![PyPI](https://img.shields.io/pypi/v/sualw.svg)](https://pypi.org/project/sualw/)
+[![Python](https://img.shields.io/pypi/pyversions/sualw.svg)](https://pypi.org/project/sualw/)
+[![](https://img.shields.io/github/license/EmmanuelNiyonshuti/sualw.svg)](https://github.com/EmmanuelNiyonshuti/sualw/blob/master/LICENSE.md)
+![t](https://img.shields.io/badge/status-maintained-yellow.svg)
+
 A small CLI tool that silences a process, gives you back your terminal, and lets you view the logs later on demand.
 
 
