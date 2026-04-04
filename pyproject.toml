@@ -2,14 +2,35 @@
 name = "sualw"
 version = "0.1.0"
 description = "A small cli tool to silence process logs and get them back on demand."
-readme = "README.md"
 authors = [
     { name = "EmmanuelNiyonshuti", email = "nemmy0257@gmail.com" }
 ]
 requires-python = ">=3.10"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Operating System :: Ubuntu",
+]
+
 dependencies = [
     "typer>=0.24.1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/EmmanuelNiyonshuti/sualw"
+Repository = "https://github.com/EmmanuelNiyonshuti/sualw"
+documentation = "https://github.com/EmmanuelNiyonshuti/sualw#readme"
+Issues = "https://github.com/EmmanuelNiyonshuti/sualw/issues"
 
 [project.scripts]
 sualw = "sualw.cli:main"
@@ -19,7 +40,8 @@ requires = ["uv_build>=0.9.26,<0.10.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
-dev = [
+test = [
+    "pytest-cov>=7.1.0",
     "mypy>=1.20.0",
     "pytest>=9.0.2",
     "ruff>=0.15.8",
