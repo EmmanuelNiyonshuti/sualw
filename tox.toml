@@ -1,0 +1,27 @@
+requires = ["tox>=4.23", "tox-uv>=1.0"] # autoinstall plugins
+env_list = ["3.10", "3.11", "3.12", "3.13", "3.14"]
+
+[env_run_base]
+description = "run the test suite with pytest"
+runner = "uv-venv-lock-runner"
+groups = ["test"] # install everything in the test dependency group
+commands = [
+    ["pytest", "--cov=sualw", "--cov-branch",
+    "--cov-report=term-missing", 
+    "--cov-report=xml",
+    "tests/"]
+]
+
+[env.lint]
+description = "Lint with ruff"
+skip_install = true
+runner = "uv-venv-runner"
+deps = ["ruff>=0.15.8"]
+commands = [["ruff", "check", "src/"]]
+
+[env.format]
+description = "Format code with ruff"
+skip_install = true
+runner = "uv-venv-runner"
+deps = ["ruff>=0.15.8"]
+commands = [["ruff", "format", "src/"]]
