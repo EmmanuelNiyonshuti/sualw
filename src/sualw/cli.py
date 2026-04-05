@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 
-from . import registry
+from . import __version__, registry
 from .proc import CommandNotFoundError, Process, StartupError
 from .tail import tail_log
 
@@ -61,6 +61,24 @@ def _load_proc_or_exit(name: str) -> Process:
     return proc  # type: ignore[return-value]
 
 
+def version_callback(version: bool) -> None:
+    if version:
+        console.print(f"sualw version: [yellow]{__version__}[/yellow]")
+        raise typer.Exit(1)
+
+
+@app.callback()
+def callback(
+    version: Annotated[
+        bool | None,
+        typer.Option(
+            "--version", help="Show the version and exit.", callback=version_callback
+        ),
+    ] = None,
+) -> None:
+    pass
+
+
 @app.command()
 def toggle(
     name: Annotated[str, typer.Argument(help="Name of the process to toggle.")],
@@ -69,7 +87,6 @@ def toggle(
         typer.Option("--history", "-H", help="Replay full log before streaming live."),
     ] = False,
 ) -> None:
-
     proc = _load_proc_or_exit(name)
 
     if not proc.alive:
@@ -190,7 +207,6 @@ def stop(
         bool, typer.Option("--force", "-f", help="Send SIGKILL instead of SIGTERM.")
     ] = False,
 ) -> None:
-
     proc = _load_proc_or_exit(name)
     signal_sent = proc.stop(force=force)
     sig_name = "SIGKILL" if force else "SIGTERM"
