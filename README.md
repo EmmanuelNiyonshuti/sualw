@@ -10,11 +10,19 @@ A small CLI tool that silences a process, gives you back your terminal, and lets
 
 
 ## Installation:
-If you are interested, since it hasn’t been published on PyPI yet, you can install it like this:
+If you are interested, you can install it as a commandline tool with pipx or uv tool
 ```bash
-pip install git+https://github.com/EmmanuelNiyonshuti/sualw.git
-```
+uv tool install sualw
 
+pipx install sualw
+```
+or
+You can install it in your project virtual environment with pip or uv
+```bash
+pip install sualw
+
+uv add sualw
+```
 Try it out:
 ```bash
 $ sualw uvicorn main:app --reload
