@@ -66,6 +66,8 @@ def find_proc_on_port(port: int) -> Optional[Process]:
 
 
 def _find_group_members(pgid: int) -> list[int]:
+    if sys.platform != "linux":  # proc file system is available on linux distributions
+        raise SystemExit(1)
     member_pids = []
     for stat_path in glob.glob("/proc/[0-9]*/stat"):
         try:
@@ -153,7 +155,6 @@ class Process:
 
     @classmethod
     def from_json(cls, name: str, json_obj: dict) -> "Process":
-
         return cls(
             name=name,
             pid=json_obj["pid"],
@@ -182,6 +183,10 @@ class Process:
 
     @property
     def alive(self) -> bool:
+        if (
+            sys.platform != "linux"
+        ):  # proc file system is available on linux distributions
+            raise SystemExit(1)
         try:
             with open(f"/proc/{self.pid}/status") as status_file:
                 for line in status_file:
