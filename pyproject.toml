@@ -3,7 +3,7 @@ name = "sualw"
 version = "0.1.0"
 description = "A small cli tool to silence process logs and get them back on demand."
 authors = [
-    { name = "EmmanuelNiyonshuti", email = "nemmy0257@gmail.com" }
+    {name = "NIYONSHUTI Emmanuel", email = "emmanuelniyonshuti13@gmail.com"}
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -56,3 +56,14 @@ module-root = "src"
 ignore = [
     "UP007", # don’t rewrite exception tuples into | syntax.
 ]
+
+[tool.coverage.run]
+branch = true
+source_pkgs = ["sualw", "tests"]
+
+[tool.coverage.report]
+exclude_also = [
+    "@overload",
+    "raise NotImplementedError",
+]
+
