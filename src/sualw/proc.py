@@ -10,7 +10,6 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional
 
 from . import registry
 
@@ -26,7 +25,7 @@ class StartupError(Exception):
         super().__init__(f"exited immediately with code {exit_code}")
 
 
-def find_pid_on_port(port: int) -> Optional[int]:
+def find_pid_on_port(port: int) -> int | None:
     """Find and return the PID of whatever process is listening on this TCP port, or None.
 
     Uses `ss` from iproute2. The output looks like:
@@ -55,7 +54,7 @@ def find_pid_on_port(port: int) -> Optional[int]:
     return None
 
 
-def find_proc_on_port(port: int) -> Optional[Process]:
+def find_proc_on_port(port: int) -> Process | None:
     listening_pid = find_pid_on_port(port)
     if listening_pid is None:
         return None
@@ -132,7 +131,7 @@ class Process:
         command: list[str],
         log: str,
         started_at: str,
-        exit_code: Optional[int] = None,
+        exit_code: int | None = None,
     ) -> None:
         self.name = name
         self.pid = pid
@@ -166,7 +165,7 @@ class Process:
         )
 
     @classmethod
-    def load(cls, name: str) -> Optional["Process"]:
+    def load(cls, name: str) -> Process | None:
         json_obj = registry.load_entry(name)
         return cls.from_json(name, json_obj) if json_obj else None
 
