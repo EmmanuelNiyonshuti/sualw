@@ -6,7 +6,7 @@ import os
 import tempfile
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Iterator, Optional
+from typing import Iterator
 
 SUALW_HOME = Path.home() / ".sualw"
 LOG_DIR = SUALW_HOME / "logs"
@@ -68,7 +68,7 @@ def load_all_entries() -> dict[str, dict]:
     return _load_json()
 
 
-def load_entry(name: str) -> Optional[dict]:
+def load_entry(name: str) -> dict | None:
     """
     Return the raw JSON object for one process by name, or None if not found.
 
